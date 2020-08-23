@@ -15,14 +15,14 @@ namespace Octopus.Pages
         public ContactPage(IWebDriver driver) : base(driver) { }
 
         public By ContactUs => By.XPath("//*[@id='post-94']/div/section[1]/div/h2");
-      //  public string ContactUsPageTitle = "Get in touch with us | Octopus Group";
+      
         public string ContactUsPageTitle = Prop.Settings("ContactUsPageTitle").Value;
 
         internal bool IsContactPageOpened()
         {
             Thread.Sleep(200);
             var testStepResult = Driver.FindElement(ContactUs).Displayed;
-            LoggerHelpers.LogInfoAboutPageOrWindowOpening("BusinessPage");
+            LoggerHelpers.LogInfoAboutPageOrWindowOpening("ContactPage");
 
             return testStepResult;
         }

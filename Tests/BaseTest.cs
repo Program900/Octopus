@@ -111,12 +111,7 @@ namespace Octopus.Tests
 
         public CareersPage CareersPage { get; private set; }
 
-        
-
-
-
-     
-
+  
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public TestContext TestContext { get; set; }
         private ScreenshotTaker ScreenshotTaker { get; set; }

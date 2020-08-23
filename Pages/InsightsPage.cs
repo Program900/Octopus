@@ -18,7 +18,7 @@ namespace Octopus.Pages
     public class InsightsPage : BasePage
 {
         public string InsightsPageeUrl { get; private set; }
-       // public const string InsightsPageTitle = "Insights | Octopus Group";
+       
         public  string InsightsPageTitle = Prop.Settings("InsightsPageTitle").Value;
 
         public string  Url = ConfigurationManager.AppSettings["Website"];

@@ -19,8 +19,6 @@ namespace Octopus.Helpers
              "Going to initialize reporter next...");
         CreateReportDirectory();
             var htmlReporter = new ExtentHtmlReporter(HtmlReportFullPath);
-           
-
         ReportManager = new ExtentReports();
             ReportManager.AddSystemInfo("Host Name", "Geetha");
                 ReportManager.AddSystemInfo("Environment", "QA");

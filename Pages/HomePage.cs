@@ -17,14 +17,12 @@ namespace Octopus.Pages
 {
     public class HomePage : BasePage
     {
-        //public const string HomePageTitle = "Octopus Group: Investments, Real Estate, Ventures, Energy, Wealth";
+        public HomePage(IWebDriver driver) : base(driver) { }
+
         public string HomePageTitle = Prop.Settings("HomePageTitle").Value;
 
-        public By ProductLocator(string productName) => By.XPath($"//a[text()='{productName}']");
-
+      
         public string HomePageUrl => ConfigurationManager.AppSettings["Website"];
-
-
         
         public By HomeLinkLocator => By.XPath("//*[@id='post-10']/div/section[1]/div[1]/div/h1");
         public By InsightsLinkLocator => By.XPath("(//*[@id='menu-item-36'])[1]");
@@ -40,7 +38,7 @@ namespace Octopus.Pages
 
 
       
-        public HomePage(IWebDriver driver) : base(driver) { }
+       
 
         internal void GoTo()
         {

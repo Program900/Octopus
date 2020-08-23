@@ -34,35 +34,18 @@ namespace Octopus.Resources
 
         private IWebDriver GetFirefoxDriver()
         {
-            var outputDirectory = GetAssemblysOutputDirectory();
-            var directoryWithFirefoxDriver = CreateFilePath(outputDirectory);
+            
 
-            if (string.IsNullOrEmpty(directoryWithFirefoxDriver))
-            {
-                directoryWithFirefoxDriver = CreateFilePath(outputDirectory);
-            }
-
-            return new FirefoxDriver(directoryWithFirefoxDriver);
+            return new FirefoxDriver();
         }
 
         private IWebDriver GetEdgeDriver()
         {
-            var outputDirectory = GetAssemblysOutputDirectory();
-            var directoryWithEdgeDriver = CreateFilePath(outputDirectory);
+           
 
-            if (string.IsNullOrEmpty(directoryWithEdgeDriver))
-            {
-                directoryWithEdgeDriver = CreateFilePath(outputDirectory);
-            }
-
-            return new EdgeDriver(directoryWithEdgeDriver);
+            return new EdgeDriver();
         }
-        private static string CreateFilePath(string outputDirectory)
-            => Path.GetFullPath(Path.Combine(outputDirectory ?? throw new InvalidOperationException(), @"..\..\..\Octopus\Resources"));
-
-        
-
-
-        private static string GetAssemblysOutputDirectory() => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+       
+       
     }
 }

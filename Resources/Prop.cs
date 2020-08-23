@@ -2,15 +2,32 @@
 using Octopus.Data;
 using System.Configuration;
 using Ganss.Excel;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace Octopus.Resources
 {
     static class Prop
     {
+        
+        private static string GetAssemblysOutputDirectory() => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+    
+        private static string CreateFilePath(string outputDirectory)
+           => Path.GetFullPath(Path.Combine(outputDirectory ?? throw new InvalidOperationException(), @"..\..\..\Octopus\Resources\Data.xlsx"));
 
         public static UserData GetUserType(String userType)
         {
-            var userExcel = new ExcelMapper(@"C:\Users\rache\source\repos\Octopus\Resources\Data.xls").Fetch<UserData>("UserData");
+            var outputDirectory = GetAssemblysOutputDirectory();
+            var directoryDataFolder = CreateFilePath(outputDirectory);
+
+            if (string.IsNullOrEmpty(directoryDataFolder))
+            {
+                directoryDataFolder = CreateFilePath(outputDirectory);
+            }
+
+            var userExcel = new ExcelMapper(directoryDataFolder).Fetch<UserData>("UserData");
+            //  @"..\..\..\Octopus\Resources"
             var userExcelData = userExcel.GetEnumerator();
             while (userExcelData.MoveNext())
             {
@@ -30,7 +47,16 @@ namespace Octopus.Resources
 
         public static SettingsData Settings(String property)
         {
-            var userExcel = new ExcelMapper(@"C:\Users\rache\source\repos\Octopus\Resources\Data.xlsx").Fetch<SettingsData>("Settings");
+            var outputDirectory = GetAssemblysOutputDirectory();
+            var directoryDataFolder = CreateFilePath(outputDirectory);
+
+            if (string.IsNullOrEmpty(directoryDataFolder))
+            {
+                directoryDataFolder = CreateFilePath(outputDirectory);
+            }
+
+            
+            var userExcel = new ExcelMapper(directoryDataFolder).Fetch<SettingsData>("Settings");
             var userExcelData = userExcel.GetEnumerator();
             while (userExcelData.MoveNext())
             {
