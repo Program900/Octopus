@@ -34,9 +34,6 @@ namespace Octopus.Pages
             return testStepResult;
         }
 
-        internal bool IsCareersPageTitleCorrect()
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
