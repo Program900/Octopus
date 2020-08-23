@@ -7,7 +7,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Configuration;
-using System.Threading;
+
 
 namespace Octopus.Pages
 {
@@ -18,8 +18,8 @@ namespace Octopus.Pages
         private string InsightsPageTitle =  ConfigurationManager.AppSettings["InsightsPageTitle"];
         private string InsightsPageUrl = ConfigurationManager.AppSettings["Website"];
        
-       private string ExpectedText = ConfigurationManager.AppSettings["SearchKeyword"];
-       private  string Expectedvalue = ConfigurationManager.AppSettings["DropdownValue"];
+       private string ExpectedResultText = ConfigurationManager.AppSettings["SearchKeyword"];
+       private  string ExpectedResultValue = ConfigurationManager.AppSettings["DropdownValue"];
 
         private By InsightsLinkLocator => By.XPath("//*[@id='main']/section[1]/div[1]/div/h1");
         private By ContactLinkLocator => By.LinkText("Contact");
@@ -70,19 +70,20 @@ namespace Octopus.Pages
          
             Driver.FindElement(SearchKeywordLocator).Click();
             Driver.FindElement(SearchKeywordLocator).Clear();
-            Driver.FindElement(SearchKeywordLocator).SendKeys("Octopus Group");
+            Driver.FindElement(SearchKeywordLocator).SendKeys(ExpectedResultText);
             Driver.FindElement(SubmitButton).Submit();
 
             ScrolltotheElement();
+            //Verify the result page displaying search result text 
            
-           string ActualText = Driver.FindElement(OctopusGroupLocator).Text;
+           string ActualResultText = Driver.FindElement(OctopusGroupLocator).Text;
 
-            var testStepResult = ActualText.Equals(ExpectedText);
+            var testStepResult = ActualResultText.Equals(ExpectedResultText);
 
             ReporterHelper.LogTestStep(
                 testStepResult,
                 "Search Page result is correct",
-                $"Expected page result was {ExpectedText} but actual page result is: {ActualText}"
+                $"Expected page result was {ExpectedResultText} but actual page result is: {ActualResultText}"
                 );
             return testStepResult;
 
@@ -95,15 +96,17 @@ namespace Octopus.Pages
             ScrolltotheElement();
             Driver.FindElement(FilterByBusinessLocator).Click();
             SelectElement selectElement = new SelectElement(Driver.FindElement(FilterByBusinessLocator));
-            selectElement.SelectByText("Octopus Energy");
+            selectElement.SelectByText(ExpectedResultValue);
             ScrolltotheElement();
-            string ActualValue = Driver.FindElement(OctopusEnergyLocator).Text;
-            var testStepResult = ActualValue.Equals(Expectedvalue);
+
+            //Verify the result page displaying as per selected value from the drop down
+            string ActualResultValue = Driver.FindElement(OctopusEnergyLocator).Text;
+            var testStepResult = ActualResultValue.Equals(ExpectedResultValue);
 
             ReporterHelper.LogTestStep(
                 testStepResult,
                 "Page result is correct as per  selected  value from the drop down",
-                $"Expected page result was {Expectedvalue} but actual page result is: {ActualValue}"
+                $"Expected page result was {ExpectedResultValue} but actual page result is: {ActualResultValue}"
                 );
             return testStepResult;
 

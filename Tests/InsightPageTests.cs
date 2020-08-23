@@ -42,7 +42,7 @@ namespace Octopus.Tests
             Assert.That(InsightsPage.FilterByBusinessValues(), Is.True);
             
         }
-        [Test, Order(5)]
+        [Test, Order(6)]
         public void VerifyUserCanSearchbyKeyword()
         {
             
