@@ -11,7 +11,7 @@ namespace Octopus.Pages
     {
         public HomePage(IWebDriver driver) : base(driver) { }
 
-        public string HomePageTitle = Prop.Settings("HomePageTitle").Value;  
+        public string HomePageTitle = ConfigurationManager.AppSettings["HomePageTitle"]; 
         public string HomePageUrl => ConfigurationManager.AppSettings["Website"];    
         public By HomeLinkLocator => By.XPath("//*[@id='post-10']/div/section[1]/div[1]/div/h1");
         public By InsightsLinkLocator => By.XPath("(//*[@id='menu-item-36'])[1]");

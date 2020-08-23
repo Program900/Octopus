@@ -2,6 +2,7 @@
 using Octopus.Resources;
 using OpenQA.Selenium;
 using System;
+using System.Configuration;
 using System.Threading;
 
 namespace Octopus.Pages
@@ -12,7 +13,7 @@ namespace Octopus.Pages
 
         public By ContactUs => By.XPath("//*[@id='post-94']/div/section[1]/div/h2");
       
-        public string ContactUsPageTitle = Prop.Settings("ContactUsPageTitle").Value;
+        public string ContactUsPageTitle =  ConfigurationManager.AppSettings["ContactUsPageTitle"]; 
 
         internal bool IsContactPageOpened()
         {

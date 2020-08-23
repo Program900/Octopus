@@ -13,7 +13,7 @@ namespace Octopus.Pages
 {
         public InsightsPage(IWebDriver driver) : base(driver) { }
         public string InsightsPageeUrl { get; private set; }   
-        public string InsightsPageTitle = Prop.Settings("InsightsPageTitle").Value;
+        public string InsightsPageTitle =  ConfigurationManager.AppSettings["InsightsPageTitle"]; 
         public string InsightsPageUrl = ConfigurationManager.AppSettings["Website"];
         public By InsightsLinkLocator => By.XPath("//*[@id='main']/section[1]/div[1]/div/h1");
         public By ContactLinkLocator => By.LinkText("Contact");

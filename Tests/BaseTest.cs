@@ -1,6 +1,5 @@
 ﻿using NLog;
 using NUnit.Framework;
-using Octopus.Data;
 using Octopus.Enums;
 using Octopus.Helpers;
 using Octopus.Pages;
@@ -75,11 +74,7 @@ namespace Octopus.Tests
             Driver = null;
             Logger.Trace("Browser stopped successfully.");
         }
-        public UserData GetUserData(string userType)
-        {
-            var userData = Prop.GetUserType(userType);
-            return userData;
-        }
+     
         public IWebDriver Driver { get; private set; }
         public HomePage HomePage { get;  set; }
         public InsightsPage InsightsPage { get; set; }

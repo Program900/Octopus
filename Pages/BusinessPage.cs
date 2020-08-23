@@ -2,6 +2,7 @@
 using Octopus.Resources;
 using OpenQA.Selenium;
 using System;
+using System.Configuration;
 using System.Threading;
 
 namespace Octopus.Pages
@@ -11,7 +12,7 @@ namespace Octopus.Pages
         public BusinessPage(IWebDriver driver) : base(driver) { }
 
         public By OurBusinesses => By.XPath("//*[@id='post-12']/div/section[1]/div/h1");
-        public string BusinessPageTitle = Prop.Settings("BusinessPageTitle").Value;
+        public string BusinessPageTitle =  ConfigurationManager.AppSettings["BusinessPageTitle"]; 
         internal bool IsBusinessPageOpened()
         {
             Thread.Sleep(200);
