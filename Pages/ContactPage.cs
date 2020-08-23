@@ -15,8 +15,8 @@ namespace Octopus.Pages
         public ContactPage(IWebDriver driver) : base(driver) { }
 
         public By ContactUs => By.XPath("//*[@id='post-94']/div/section[1]/div/h2");
-        public string ContactUsPageTitle = "Get in touch with us | Octopus Group";
-        public string BusinessPageTitle = Prop.Settings("BusinessPageTitle").Value;
+      //  public string ContactUsPageTitle = "Get in touch with us | Octopus Group";
+        public string ContactUsPageTitle = Prop.Settings("ContactUsPageTitle").Value;
 
         internal bool IsContactPageOpened()
         {
