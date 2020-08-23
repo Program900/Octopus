@@ -27,25 +27,15 @@ namespace Octopus.Resources
         }
         private IWebDriver GetChromeDriver()
         {
-            
-
             return new ChromeDriver();
         }
-
         private IWebDriver GetFirefoxDriver()
         {
-            
-
             return new FirefoxDriver();
         }
-
         private IWebDriver GetEdgeDriver()
         {
-           
-
             return new EdgeDriver();
-        }
-       
-       
+        }      
     }
 }

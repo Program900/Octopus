@@ -8,37 +8,26 @@ using Octopus.Resources;
 using OpenQA.Selenium;
 using System;
 
-
 namespace Octopus.Tests
-{
-    
+{    
     public class BaseTest
     {
-
         [OneTimeSetUp]
         public void SetupBeforeAllTests()
         {
             ReporterHelper.StartReporter();
         }
-
-        [SetUp]
+       [SetUp]
         public void SetupBeforeEverySingleTest()
         {
-
              Logger.Debug("*** TEST STARTED ***");
             ReporterHelper.AddTestCaseMetadataToHtmlReports(TestContext.CurrentContext);
-
             Driver = new WebDriverFactory().Create(BrowserType.Chrome);
-            Driver.Manage().Window.Maximize();
-            
-
-
+            Driver.Manage().Window.Maximize();         
             ScreenshotTaker = new ScreenshotTaker(Driver);
-
-            HomePage = new HomePage(Driver);
-            HomePage.GoTo();
+            InsightsPage = new InsightsPage(Driver);
+            InsightsPage.GoTo();
         }
-
         [TearDown]
         public void CleanUpAfterEverySingleTest()
         {
@@ -63,11 +52,8 @@ namespace Octopus.Tests
                 StopBrowser();
                 Logger.Debug(TestContext.CurrentContext.Test.Name);
                 Logger.Debug("*** TEST STOPPED ***");
-
             }
-
         }
-
         private void TakeScreenshotForTestFailure()
         {
             if (ScreenshotTaker != null)
@@ -80,7 +66,6 @@ namespace Octopus.Tests
                 ReporterHelper.ReportTestOutcome("");
             }
         }
-
         private void StopBrowser()
         {
             if (Driver == null)
@@ -90,28 +75,18 @@ namespace Octopus.Tests
             Driver = null;
             Logger.Trace("Browser stopped successfully.");
         }
-
         public UserData GetUserData(string userType)
         {
             var userData = Prop.GetUserType(userType);
             return userData;
         }
-
-
         public IWebDriver Driver { get; private set; }
-        public HomePage HomePage { get; private set; }
-
+        public HomePage HomePage { get;  set; }
         public InsightsPage InsightsPage { get; set; }
-
         public AboutPage AboutPage { get; private set; }
-
         public BusinessPage BusinessPage { get; set; }
-
         public ContactPage ContactPage { get; set; }
-
         public CareersPage CareersPage { get; private set; }
-
-  
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public TestContext TestContext { get; set; }
         private ScreenshotTaker ScreenshotTaker { get; set; }

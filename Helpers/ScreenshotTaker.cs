@@ -13,7 +13,6 @@ namespace Octopus.Helpers
 
         public string ScreenshotFileName { get; private set; }
         public string ScreenshotFilePath { get; private set; }
-
         public ScreenshotTaker(IWebDriver driver)
         {
             if (driver == null)
@@ -21,7 +20,6 @@ namespace Octopus.Helpers
             _driver = driver;
             ScreenshotFileName = TestContext.CurrentContext.Test.Name;
         }
-
         public void CreateScreenshotIfTestFailed()
         {
             var testResult = TestContext.CurrentContext.Result.Outcome.Status;
@@ -29,14 +27,12 @@ namespace Octopus.Helpers
                 testResult == TestStatus.Inconclusive)
                 TakeScreenshotForFailure();
         }
-
         public string TakeScreenshot(string screenshotFileName)
         {
             var ss = GetScreenshot();
             var successfullySaved = TryToSaveScreenshot(screenshotFileName, ss);
             return successfullySaved ? ScreenshotFilePath : "";
         }
-
         public bool TakeScreenshotForFailure()
         {
             ScreenshotFileName = $"FAIL_{ScreenshotFileName}";
@@ -46,7 +42,6 @@ namespace Octopus.Helpers
                 Logger.Error($"Screenshot Of Error => {ScreenshotFilePath}");
             return successfullySaved;
         }
-
         private bool TryToSaveScreenshot(string screenshotFileName, Screenshot ss)
         {
             try
@@ -62,7 +57,6 @@ namespace Octopus.Helpers
                 return false;
             }
         }
-
         private void SaveScreenshot(string screenshotName, Screenshot ss)
         {
             if (ss == null)
@@ -71,7 +65,6 @@ namespace Octopus.Helpers
             ScreenshotFilePath = ScreenshotFilePath.Replace('/', ' ').Replace('"', ' ');
             ss.SaveAsFile(ScreenshotFilePath, ScreenshotImageFormat.Png);
         }
-
         private Screenshot GetScreenshot()
         {
             return ((ITakesScreenshot)_driver)?.GetScreenshot();

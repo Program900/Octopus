@@ -2,11 +2,7 @@
 using Octopus.Resources;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Octopus.Pages
 {
@@ -23,10 +19,8 @@ namespace Octopus.Pages
             Thread.Sleep(200);
             var testStepResult = Driver.FindElement(ContactUs).Displayed;
             LoggerHelpers.LogInfoAboutPageOrWindowOpening("ContactPage");
-
             return testStepResult;
         }
-
         internal bool IsContactPageTitleCorrect()
         {
             var testStepResult = Driver.Title.Contains(ContactUsPageTitle);
@@ -36,7 +30,6 @@ namespace Octopus.Pages
                 "Page title is correct",
                 $"Expected page title was {ContactUsPageTitle} but actual page title is: {Driver.Title}"
                 );
-
             return testStepResult;
         }
     }

@@ -1,17 +1,9 @@
-﻿
-using Octopus.Enums;
-using Octopus.Helpers;
+﻿using Octopus.Helpers;
 using Octopus.Resources;
-using Octopus.Tests;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Octopus.Pages
 {
@@ -19,36 +11,17 @@ namespace Octopus.Pages
     {
         public HomePage(IWebDriver driver) : base(driver) { }
 
-        public string HomePageTitle = Prop.Settings("HomePageTitle").Value;
-
-      
-        public string HomePageUrl => ConfigurationManager.AppSettings["Website"];
-        
+        public string HomePageTitle = Prop.Settings("HomePageTitle").Value;  
+        public string HomePageUrl => ConfigurationManager.AppSettings["Website"];    
         public By HomeLinkLocator => By.XPath("//*[@id='post-10']/div/section[1]/div[1]/div/h1");
         public By InsightsLinkLocator => By.XPath("(//*[@id='menu-item-36'])[1]");
-
-        public By InsightsLink => By.XPath("(//a[contains(text(),'Insights')])[2]");
-
-
-        
+        public By InsightsLink => By.XPath("(//a[contains(text(),'Insights')])[2]");      
         public By AboutLinkLocator => By.LinkText("About us");
         public By BusinessLinkLocator => By.LinkText("Businesses");
         public By CareersLinkLocator => By.Id("login2");
         public By ContactLinkLocator => By.LinkText("Contact");
 
-
-      
-       
-
-        internal void GoTo()
-        {
-            
-            Driver.Navigate().GoToUrl(HomePageUrl);
-            
-            ReporterHelper.LogPassingTestStep($"Opening Octopus.com homepage");
-        }
-
-        internal bool IsPageOpened()
+        internal bool IsHomePageOpened()
         {
             Thread.Sleep(200);
             var testStepResult = Driver.FindElement(HomeLinkLocator).Displayed;
@@ -56,7 +29,6 @@ namespace Octopus.Pages
 
             return testStepResult;
         }
-
         internal bool IsPageTitleCorrect()
         {
             var testStepResult = Driver.Title.Contains(HomePageTitle);
@@ -68,46 +40,6 @@ namespace Octopus.Pages
                 );
 
             return testStepResult;
-        }
-
-        public T ClickLink<T>(LinkText link)
-        {
-            switch (link)
-            {
-                case LinkText.Insights:
-                    Click(InsightsLinkLocator);
-                   
-                    Thread.Sleep(2000);
-                    MoveTotheElement(InsightsLink);
-                    Click(InsightsLink);
-                    LoggerHelpers.LogInfoAboutPageOrWindowOpening("InsightsPage");
-                    return (T)Convert.ChangeType(new InsightsPage(Driver), typeof(T));
-
-                case LinkText.About:
-                    Click(AboutLinkLocator);
-                    LoggerHelpers.LogInfoAboutPageOrWindowOpening("AboutPage");
-                    return (T)Convert.ChangeType(new AboutPage(Driver), typeof(T));
-                case LinkText.Business:
-                    Click(BusinessLinkLocator);
-                    LoggerHelpers.LogInfoAboutPageOrWindowOpening("BusinessPage");
-                    return (T)Convert.ChangeType(new BusinessPage(Driver), typeof(T));
-                case LinkText.Careers:
-                    Click(CareersLinkLocator);
-                    LoggerHelpers.LogInfoAboutPageOrWindowOpening("CareerPage");
-                    return (T)Convert.ChangeType(new CareersPage(Driver), typeof(T));
-                case LinkText.Contact:
-                    Click(ContactLinkLocator);
-                    LoggerHelpers.LogInfoAboutPageOrWindowOpening("ContactPage");
-                    return (T)Convert.ChangeType(new ContactPage(Driver), typeof(T));
-
-                default:
-                    throw new Exception("No such link text");
-            }
-        }
-
-       
-       
-
-        
+        }      
     }
 }

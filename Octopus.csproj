@@ -142,7 +142,7 @@
     <Compile Include="Resources\Prop.cs" />
     <Compile Include="Resources\WebDriverFactory.cs" />
     <Compile Include="Tests\BaseTest.cs" />
-    <Compile Include="Tests\HomepageTests.cs" />
+    <Compile Include="Tests\InsightPageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

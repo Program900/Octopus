@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Octopus.Enums
+﻿namespace Octopus.Enums
 {
     public enum LinkText
     {
+        Home,
         Insights,
         About,
         Business,

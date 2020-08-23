@@ -2,7 +2,6 @@
 using Octopus.Data;
 using System.Configuration;
 using Ganss.Excel;
-using System;
 using System.IO;
 using System.Reflection;
 
@@ -20,12 +19,10 @@ namespace Octopus.Resources
         {
             var outputDirectory = GetAssemblysOutputDirectory();
             var directoryDataFolder = CreateFilePath(outputDirectory);
-
             if (string.IsNullOrEmpty(directoryDataFolder))
             {
                 directoryDataFolder = CreateFilePath(outputDirectory);
             }
-
             var userExcel = new ExcelMapper(directoryDataFolder).Fetch<UserData>("UserData");
             //  @"..\..\..\Octopus\Resources"
             var userExcelData = userExcel.GetEnumerator();
@@ -37,14 +34,11 @@ namespace Octopus.Resources
                     Console.Write("Data " + ConfigurationManager.AppSettings["environment"] + userType);
                     return current;
                 }
-
             }
             Console.Write("Error Data not found" + userType + " #######");
 
             return null;
         }
-
-
         public static SettingsData Settings(String property)
         {
             var outputDirectory = GetAssemblysOutputDirectory();
@@ -53,9 +47,7 @@ namespace Octopus.Resources
             if (string.IsNullOrEmpty(directoryDataFolder))
             {
                 directoryDataFolder = CreateFilePath(outputDirectory);
-            }
-
-            
+            }           
             var userExcel = new ExcelMapper(directoryDataFolder).Fetch<SettingsData>("Settings");
             var userExcelData = userExcel.GetEnumerator();
             while (userExcelData.MoveNext())
@@ -66,13 +58,10 @@ namespace Octopus.Resources
                     return current;
 
                 }
-
             }
             Console.Write("Error Data not found for " + property + " #######");
 
             return null;
         }
-
-
     }
 }

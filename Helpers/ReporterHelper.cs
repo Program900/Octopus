@@ -25,10 +25,7 @@ namespace Octopus.Helpers
             ReportManager.AddSystemInfo("Tester", "Geetha Macherla");
             
             ReportManager.AttachReporter(htmlReporter);
-
     }
-
-
     private static void CreateReportDirectory()
     {
         var filePath = Path.GetFullPath(ApplicationDebuggingFolder);
@@ -37,18 +34,14 @@ namespace Octopus.Helpers
 
         if (!Directory.Exists(filePath))
             Directory.CreateDirectory(LatestResultsReportFolder);
-
         HtmlReportFullPath = $"{filePath}\\TestResults.html";
-
         MyLogger.Trace("Full path of HTML report => " + HtmlReportFullPath);
     }
-
     public static void AddTestCaseMetadataToHtmlReports(TestContext testContext)
     {
         MyTestContext = testContext;
         CurrentTestCase = ReportManager.CreateTest(MyTestContext.Test.Name);
     }
-
     public static void LogTestStep(bool isTestStepPassed, string successMessage, string failMessage)
     {
         try
@@ -66,21 +59,17 @@ namespace Octopus.Helpers
         {
             MyLogger.Info(exception);
         }
-
     }
-
     private static void LogInfoMessage(Status status, string message)
     {
         MyLogger.Info(message);
         CurrentTestCase.Log(status, message);
     }
-
     public static void LogPassingTestStep(string message)
     {
         MyLogger.Info(message);
         CurrentTestCase.Log(Status.Pass, message);
     }
-
     public static void ReportTestOutcome(string screenshotPath)
     {
         var status = MyTestContext.Result.Outcome.Status;
@@ -104,9 +93,7 @@ namespace Octopus.Helpers
                 break;
         }
         ReportManager.Flush();
-
     }
-
     public static string LatestResultsReportFolder { get; private set; }
     private static string ApplicationDebuggingFolder => "c://Reports";
     private static ExtentReports ReportManager { get; set; }
@@ -114,7 +101,5 @@ namespace Octopus.Helpers
     private static TestContext MyTestContext { get; set; }
     public static ExtentTest CurrentTestCase { get; set; }
     public static string CurrentTestCategory { get; set; }
-
-
 }
 }

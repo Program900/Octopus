@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Octopus.Helpers
 {
@@ -16,12 +12,10 @@ namespace Octopus.Helpers
                 "Browser alert containing expected message has not been displayed"
                 );
         }
-
         public static void LogInfoAboutPageOrWindowOpening(string windowOrPageName)
         {
             ReporterHelper.LogPassingTestStep($"Opening the {windowOrPageName}");
         }
-
         public static void LogInfoAboutPageOrWindowOpened(bool testStepResult, string windowOrPageName)
         {
             ReporterHelper.LogTestStep(
@@ -30,7 +24,6 @@ namespace Octopus.Helpers
                 $"{windowOrPageName} has not been opened"
                 );
         }
-
         internal static void LogInfoAboutValueEnteredIntoFormField(string text)
         {
             throw new NotImplementedException();
@@ -39,9 +32,7 @@ namespace Octopus.Helpers
         public static void LogInfoAboutWindowSubmitted(string windowName)
         {
             ReporterHelper.LogPassingTestStep($"{windowName} has been submitted");
-        }
-
-       
+        }     
         public static void LogInfoAboutWebElementDisplayed(bool testStepResult, string webElementName)
         {
             ReporterHelper.LogTestStep(
