@@ -1,8 +1,10 @@
 ﻿
+using MongoDB.Bson.Serialization.Serializers;
 using Octopus.Enums;
 using Octopus.Helpers;
 using Octopus.Resources;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Configuration;
 using System.Threading;
@@ -12,18 +14,28 @@ namespace Octopus.Pages
     public class InsightsPage : BasePage
 {
         public InsightsPage(IWebDriver driver) : base(driver) { }
-        public string InsightsPageeUrl { get; private set; }   
-        public string InsightsPageTitle =  ConfigurationManager.AppSettings["InsightsPageTitle"]; 
-        public string InsightsPageUrl = ConfigurationManager.AppSettings["Website"];
-        public By InsightsLinkLocator => By.XPath("//*[@id='main']/section[1]/div[1]/div/h1");
-        public By ContactLinkLocator => By.LinkText("Contact");
-        public By AboutUsLinkLocator => By.LinkText("About us");
-        public By Home => By.CssSelector("div.primaryNav--desktop > a.header-logo > svg");
-        public By HomeLinkLocator => By.XPath("//article[@id='post-10']/div/section/div/div/h1");
-        public By InsightsLink => By.XPath("(//a[contains(text(),'Insights')])[2]");
-        public By AboutLinkLocator => By.LinkText("About us");
-        public By BusinessLinkLocator => By.LinkText("Businesses");
-        public By CareersLinkLocator => By.Id("login2");
+    
+        private string InsightsPageTitle =  ConfigurationManager.AppSettings["InsightsPageTitle"];
+        private string InsightsPageUrl = ConfigurationManager.AppSettings["Website"];
+       
+       private string ExpectedText = ConfigurationManager.AppSettings["SearchKeyword"];
+       private  string Expectedvalue = ConfigurationManager.AppSettings["DropdownValue"];
+
+        private By InsightsLinkLocator => By.XPath("//*[@id='main']/section[1]/div[1]/div/h1");
+        private By ContactLinkLocator => By.LinkText("Contact");
+  
+        private By Home => By.CssSelector("div.primaryNav--desktop > a.header-logo > svg");
+   
+        private By AboutLinkLocator => By.LinkText("About us");
+        private By BusinessLinkLocator => By.LinkText("Businesses");
+        private By CareersLinkLocator => By.Id("//*[@id='menu-item-95']/a");
+        private By OctopusEnergyLocator => By.XPath("//*[@id='main']/section[3]/div/div[1]/div[1]/article/div/div[1]/span[2]");
+
+        private By FilterByBusinessLocator => By.XPath("//*[@id='main']/section[2]/div/form/div[2]/select");
+        private By SearchKeywordLocator => By.XPath("//*[@id='main']/section[2]/div/form/div[1]/input");
+        private By SubmitButton => By.XPath("//*[@id='main']/section[2]/div/form/div[1]/i");
+
+        private By OctopusGroupLocator => By.XPath("//*[@id='main']/section[3]/div/div[1]/div[1]/article/div/div[1]/span[1]");
         internal void GoTo()
         {
             Driver.Navigate().GoToUrl(InsightsPageUrl);
@@ -32,7 +44,7 @@ namespace Octopus.Pages
         }
         internal bool IsInsightsPageOpened()
         {
-            Thread.Sleep(2000);
+           
             var testStepResult = Driver.FindElement(InsightsLinkLocator).Displayed;
             LoggerHelpers.LogInfoAboutPageOrWindowOpening("InsightsPage");
 
@@ -40,16 +52,66 @@ namespace Octopus.Pages
         }
         internal bool IsPageTitleCorrect()
         {
-            var testStepResult = Driver.Title == InsightsPageTitle;
+            var testStepResult = Driver.Title.Equals(InsightsPageTitle);
             Console.WriteLine(Driver.Title);
             ReporterHelper.LogTestStep(
                 testStepResult,
-                "Page title is correct",
+                "Insight Page title is correct",
                 $"Expected page title was {InsightsPageTitle} but actual page title is: {Driver.Title}"
                 );
             return testStepResult;
         }
-        public T ClickLink<T>(LinkText link)
+
+        internal bool SearchByText()
+        {
+           
+
+            ScrolltotheElement();
+         
+            Driver.FindElement(SearchKeywordLocator).Click();
+            Driver.FindElement(SearchKeywordLocator).Clear();
+            Driver.FindElement(SearchKeywordLocator).SendKeys("Octopus Group");
+            Driver.FindElement(SubmitButton).Submit();
+
+            ScrolltotheElement();
+           
+           string ActualText = Driver.FindElement(OctopusGroupLocator).Text;
+
+            var testStepResult = ActualText.Equals(ExpectedText);
+
+            ReporterHelper.LogTestStep(
+                testStepResult,
+                "Search Page result is correct",
+                $"Expected page result was {ExpectedText} but actual page result is: {ActualText}"
+                );
+            return testStepResult;
+
+        }
+
+        internal bool FilterByBusinessValues()
+        {
+            
+
+            ScrolltotheElement();
+            Driver.FindElement(FilterByBusinessLocator).Click();
+            SelectElement selectElement = new SelectElement(Driver.FindElement(FilterByBusinessLocator));
+            selectElement.SelectByText("Octopus Energy");
+            ScrolltotheElement();
+            string ActualValue = Driver.FindElement(OctopusEnergyLocator).Text;
+            var testStepResult = ActualValue.Equals(Expectedvalue);
+
+            ReporterHelper.LogTestStep(
+                testStepResult,
+                "Page result is correct as per  selected  value from the drop down",
+                $"Expected page result was {Expectedvalue} but actual page result is: {ActualValue}"
+                );
+            return testStepResult;
+
+
+
+        }
+
+        internal T ClickLink<T>(LinkText link)
         {
             switch (link)
             {
@@ -77,5 +139,17 @@ namespace Octopus.Pages
                     throw new Exception("No such link text");
             }
         }
+
+        protected void ScrolltotheElement()
+        {
+
+            IJavaScriptExecutor js = (IJavaScriptExecutor)Driver;
+
+            js.ExecuteScript("arguments[0].scrollIntoView();", Driver.FindElement(By.XPath("//*[@id='main']/section[2]")));
+            
+        }
+
+
+
     }
 }

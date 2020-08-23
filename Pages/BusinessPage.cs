@@ -3,7 +3,7 @@ using Octopus.Resources;
 using OpenQA.Selenium;
 using System;
 using System.Configuration;
-using System.Threading;
+
 
 namespace Octopus.Pages
 {
@@ -11,11 +11,11 @@ namespace Octopus.Pages
     {
         public BusinessPage(IWebDriver driver) : base(driver) { }
 
-        public By OurBusinesses => By.XPath("//*[@id='post-12']/div/section[1]/div/h1");
-        public string BusinessPageTitle =  ConfigurationManager.AppSettings["BusinessPageTitle"]; 
+        private By OurBusinesses => By.XPath("//*[@id='post-12']/div/section[1]/div/h1");
+        private string BusinessPageTitle =  ConfigurationManager.AppSettings["BusinessPageTitle"]; 
         internal bool IsBusinessPageOpened()
         {
-            Thread.Sleep(200);
+           
             var testStepResult = Driver.FindElement(OurBusinesses).Displayed;
             LoggerHelpers.LogInfoAboutPageOrWindowOpening("BusinessPage");
 
@@ -27,7 +27,7 @@ namespace Octopus.Pages
             Console.WriteLine(Driver.Title);
             ReporterHelper.LogTestStep(
                 testStepResult,
-                "Page title is correct",
+                "Business Page title is correct",
                 $"Expected page title was {BusinessPageTitle} but actual page title is: {Driver.Title}"
                 );
             return testStepResult;

@@ -6,6 +6,7 @@ using System.Reflection;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.IE;
 
 namespace Octopus.Resources
 {
@@ -21,6 +22,8 @@ namespace Octopus.Resources
                     return GetFirefoxDriver();
                 case BrowserType.Edge:
                     return GetEdgeDriver();
+                case BrowserType.InternetExplorer:
+                    return GetIEDriver();
                 default:
                     throw new ArgumentOutOfRangeException("No such browser exist");
             }
@@ -36,6 +39,10 @@ namespace Octopus.Resources
         private IWebDriver GetEdgeDriver()
         {
             return new EdgeDriver();
-        }      
+        }
+        private IWebDriver GetIEDriver()
+        {
+            return new InternetExplorerDriver();
+        }
     }
 }

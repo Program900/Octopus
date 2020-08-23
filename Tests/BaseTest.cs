@@ -81,7 +81,7 @@ namespace Octopus.Tests
         public AboutPage AboutPage { get; private set; }
         public BusinessPage BusinessPage { get; set; }
         public ContactPage ContactPage { get; set; }
-        public CareersPage CareersPage { get; private set; }
+        public CareersPage CareersPage { get;  set; }
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public TestContext TestContext { get; set; }
         private ScreenshotTaker ScreenshotTaker { get; set; }

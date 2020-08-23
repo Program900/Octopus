@@ -23,7 +23,7 @@ namespace Octopus.Pages
 
             LoggerHelpers.LogInfoAboutValueEnteredIntoFormField(text);
         }
-        public string GetTextOfElement(By locator) => LocateElement(locator).Text;
+        protected string GetTextOfElement(By locator) => LocateElement(locator).Text;
         protected IWebElement LocateElement(By locator) => Driver.FindElement(locator);
         protected bool IsElementDisplayedImmediately(By locator) => LocateElement(locator).Displayed;
         protected bool IsElementDisplayedAfterWaiting(By locator)
@@ -32,7 +32,7 @@ namespace Octopus.Pages
 
             return LocateElement(locator).Displayed;
         }
-        public bool IsElementappearedAfterWaiting(By locator)
+        protected bool IsElementappearedAfterWaiting(By locator)
         {
             try
             {
@@ -44,19 +44,14 @@ namespace Octopus.Pages
                 throw new Exception("Element is still visible");
             }
         }
-        public void  MoveTotheElement(By locator)
+        protected void  MoveTotheElement(By locator)
         {
             Actions actions = new Actions(Driver);
             IWebElement mainMenu = Driver.FindElement(locator);
             actions.MoveToElement(mainMenu);
         }
-        public void ScrolltotheElement(By locator) {
-
-            IJavaScriptExecutor js = (IJavaScriptExecutor)Driver;
-            //This will scroll the page Horizontally till the element is found
-            js.ExecuteScript("arguments[0].scrollIntoView();", locator);
-        }
-        public void ClickOnElementAfterWaiting(By locator) => Wait.Until(EC.ElementIsVisible(locator)).Click();
+        
+        protected void ClickOnElementAfterWaiting(By locator) => Wait.Until(EC.ElementIsVisible(locator)).Click();
         protected void WaitForBrowserAlert() => Wait.Until(EC.AlertIsPresent());
     }
 

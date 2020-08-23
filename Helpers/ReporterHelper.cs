@@ -94,7 +94,13 @@ namespace Octopus.Helpers
         }
         ReportManager.Flush();
     }
-    public static string LatestResultsReportFolder { get; private set; }
+
+        internal static void LogTestStep(object testStepResult, string v1, string v2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static string LatestResultsReportFolder { get; private set; }
     private static string ApplicationDebuggingFolder => "c://Reports";
     private static ExtentReports ReportManager { get; set; }
     private static string HtmlReportFullPath { get; set; }
